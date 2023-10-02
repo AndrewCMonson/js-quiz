@@ -1,37 +1,24 @@
 body {
     display: flex;
-    justify-content: center;
     align-items: center;
     height: 100vh;
-}
-
-button {
-    width: 75px;
-    margin-bottom: 5px;
+    justify-content: center;
 }
 
 .card-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 750px;
-    height: 500px;
     border: solid 1px black;
-    position: relative;
-    justify-content: center;
-}
-
-.q-card {
     display: flex;
+    align-items: center;
     flex-direction: column;
-    height: 350px;
-    width: 350px;
-    border:solid black 1px;
-    position: absolute;
+    height: 500px;
+    width: 500px;
 }
 
-#q-2,
-#q-3,
-#q-4 {
-    display: none;
+.options {
+    margin-top: 25px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap: 5px;
 }
+
