@@ -1,6 +1,6 @@
 // Object that contains an array of objects for questions to load onto the page
 
-const Questions = [{
+const questions = [{
     q: 'Which data type must always be enclosed in quotations?',
     a: [{ text: 'String', isCorrect: true },
         { text: 'Number', isCorrect: false},
@@ -25,16 +25,16 @@ const Questions = [{
 
 let currentQuestion = 0;
 
-// Function that loads questions onto the page based on Questions object
+// Function that loads questions onto the page based on questions object
 const loadQuestion = () => {
     const question = document.getElementById('q');
     const option = document.getElementById('o');
     
 
-    question.innerHTML = Questions[currentQuestion].q;
+    question.innerHTML = questions[currentQuestion].q;
     option.innerHTML = '';
 
-    for (let i = 0; i < Questions[currentQuestion].a.length; i++){
+    for (let i = 0; i < questions[currentQuestion].a.length; i++){
         const choice = document.createElement('button');
 
         choice.type = 'button';
@@ -42,25 +42,45 @@ const loadQuestion = () => {
         // choice.value = i;
         choice.id = 'btn' + i;
         choice.style.cursor = 'pointer';
-        choice.className = 'btn'
+        choice.className = 'btn';
+        choice.value = questions[currentQuestion].a[i].isCorrect;
 
-        choice.innerHTML = Questions[currentQuestion].a[i].text;
+        choice.innerHTML = questions[currentQuestion].a[i].text;
 
-        
         option.appendChild(choice);
-
-        
+    
     }
+
+
 }
 
 loadQuestion();
 
+// Function responsible for incrementing questions
 const nextQuestion = () => {
-    if (currentQuestion < Questions.length - 1){
+    if (currentQuestion < questions.length - 1){
         currentQuestion++;
-        loadQuestion();
+        loadQuestion();      
+    } else {
+       document.getElementById('o').remove();
+       document.getElementById('q').remove();
     }
 }
 
-document.querySelectorAll('.btn').forEach(btn => btn.addEventListener('click', e => nextQuestion()));
+// Event listener assigned to each button within the card container div. Once the button is clicked, it moves to the next question.
+const container = document.querySelector('.card-container');
+
+let answers = [];
+
+container.addEventListener('click', e => {
+    
+    
+    if (e.target.classList.contains('btn')){
+        nextQuestion();
+        console.log(e.target.value); // using to view answers
+        answers.push(e.target.value); // pushes answers to global array. will use to decrement timer later and judge score
+        console.log(answers); //using to view answers
+    }
+})
+
 
