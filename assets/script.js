@@ -32,9 +32,11 @@ const question = document.getElementById('q');
 const option = document.getElementById('o');
 const scoreSpan = document.getElementById('score');
 const timer = document.getElementById('timer');
+const submitScore = document.getElementById('score-submit');
 
 let currentQuestion = 0;
 let score = 0;
+let leaderboard = [];
 
 // Function that loads questions onto the page based on questions object
 const loadQuestion = () => {
@@ -123,6 +125,7 @@ const countdown = (seconds) => {
             quizDiv.style.display = 'block';
             quizHeader.textContent = 'Quiz Complete';
             startButton.style.display = 'none';
+            submitScore.style.display = 'block';
             setScore();
         }
     }, 1000);
@@ -148,3 +151,5 @@ const setScore = () => {
         scoreSpan.textContent = `Your score is ${score}. Better luck next time!`
     }
 }
+
+// TODO build hi-scores function
