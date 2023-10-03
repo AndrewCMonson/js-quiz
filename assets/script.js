@@ -119,7 +119,7 @@ const countdown = (seconds) => {
         // once all answers are submitted, interval is cleared and display changes
         if (answers[0, 1, 2]){
             clearInterval(interval);
-            document.getElementById('timer').style.display = 'none';
+            timer.style.display = 'none';
             quizDiv.style.display = 'block';
             quizHeader.textContent = 'Quiz Complete';
             startButton.style.display = 'none';
