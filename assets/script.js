@@ -19,7 +19,7 @@ const questions = [{
     a: [{ text: 'Dominant Object Method', isCorrect: false},
         { text: 'Document Object Model', isCorrect: true},
         { text: 'Distributed Object Model', isCorrect: false},
-        { text: 'Document Open Model', isCorrect: true}]
+        { text: 'Document Open Model', isCorrect: false}]
 }
 ]
 
@@ -29,11 +29,11 @@ let currentQuestion = 0;
 const loadQuestion = () => {
     const question = document.getElementById('q');
     const option = document.getElementById('o');
-    
 
-    question.innerHTML = questions[currentQuestion].q;
+    question.innerHTML = questions[currentQuestion].q; //grabs question from questions object
     option.innerHTML = '';
 
+    // for loop that loops through questions', pulls the answers out and appends a button with attributes to the options div
     for (let i = 0; i < questions[currentQuestion].a.length; i++){
         const choice = document.createElement('button');
 
@@ -49,12 +49,21 @@ const loadQuestion = () => {
 
         option.appendChild(choice);
     
+
     }
-
-
 }
 
-loadQuestion();
+// loadQuestion();
+
+const welcomediv = document.getElementById('welcome');
+const startButton = document.getElementById('start');
+
+startButton.addEventListener('click', e => {
+    welcomediv.style.display = 'none';
+    loadQuestion();
+    countdown(60);
+})
+
 
 // Function responsible for incrementing questions
 const nextQuestion = () => {
@@ -67,14 +76,12 @@ const nextQuestion = () => {
     }
 }
 
-// Event listener assigned to each button within the card container div. Once the button is clicked, it moves to the next question.
+// Event listener assigned to each button within the card container div. Once the button is clicked, it moves to the next question by calling the nextQuestion function
 const container = document.querySelector('.card-container');
 
-let answers = [];
+let answers = []; // array that stores answer values
 
 container.addEventListener('click', e => {
-    
-    
     if (e.target.classList.contains('btn')){
         nextQuestion();
         console.log(e.target.value); // using to view answers
@@ -83,4 +90,39 @@ container.addEventListener('click', e => {
     }
 })
 
+// countdown function that takes seconds as an argument and increments down. It prints the timer to the page, checks the value of the answers array for the correct answer and removes 5 seconds per wrong answer. 
+const countdown = (seconds) => {
+    let counter = seconds;
+
+    const interval = setInterval(() => {
+        console.log(counter);
+        counter--;
+
+        document.getElementById('timer').textContent = counter;
+
+        if(answers[0] === 'false'){
+            document.getElementById('timer').textContent = counter - 5; 
+        }if(answers[1] === 'false'){
+            document.getElementById('timer').textContent = counter - 10; 
+        }if(answers[2] === 'false'){
+            document.getElementById('timer').textContent = counter - 15; 
+        }
+        
+        // once the counter reaches 0, the timer clears and prints "Time's Up" to the document
+        if (document.getElementById('timer').textContent <= 0){
+            clearInterval(interval);
+            document.getElementById('timer').textContent = 'Time\'s Up';
+            console.log('Time\'s Up');
+            document.getElementById('o').remove();
+            document.getElementById('q').remove();
+        }
+
+        if (answers[0, 1, 2]){
+            clearInterval(interval);
+            document.getElementById('timer').textContent = 'Quiz Complete';
+        }
+    }, 1000);
+}
+
+// countdown(60);
 
