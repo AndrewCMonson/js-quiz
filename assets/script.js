@@ -23,13 +23,18 @@ const questions = [{
 }
 ]
 
+const quizDiv = document.getElementById('quiz-title');
+const quizHeader= document.getElementById('qh');
+const startButton = document.getElementById('start');
+const question = document.getElementById('q');
+const option = document.getElementById('o');
+const scoreSpan = document.getElementById('score');
+
 let currentQuestion = 0;
+let score = 0;
 
 // Function that loads questions onto the page based on questions object
 const loadQuestion = () => {
-    const question = document.getElementById('q');
-    const option = document.getElementById('o');
-
     question.innerHTML = questions[currentQuestion].q; //grabs question from questions object
     option.innerHTML = '';
 
@@ -48,22 +53,16 @@ const loadQuestion = () => {
         choice.innerHTML = questions[currentQuestion].a[i].text;
 
         option.appendChild(choice);
-    
-
     }
 }
 
 // loadQuestion();
 
-const welcomediv = document.getElementById('welcome');
-const startButton = document.getElementById('start');
-
 startButton.addEventListener('click', e => {
-    welcomediv.style.display = 'none';
+    quizDiv.style.display = 'none';
     loadQuestion();
     countdown(60);
 })
-
 
 // Function responsible for incrementing questions
 const nextQuestion = () => {
@@ -119,10 +118,14 @@ const countdown = (seconds) => {
 
         if (answers[0, 1, 2]){
             clearInterval(interval);
-            document.getElementById('timer').textContent = 'Quiz Complete';
+            document.getElementById('timer').style.display = 'none';
+            quizDiv.style.display = 'block';
+            quizHeader.textContent = 'Quiz Complete';
+            startButton.style.display = 'none';
+            
         }
     }, 1000);
 }
 
-// countdown(60);
+
 
