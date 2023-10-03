@@ -23,6 +23,8 @@ const questions = [{
 }
 ]
 
+
+// Global variables
 const quizDiv = document.getElementById('quiz-title');
 const quizHeader= document.getElementById('qh');
 const startButton = document.getElementById('start');
@@ -45,12 +47,10 @@ const loadQuestion = () => {
 
         choice.type = 'button';
         choice.name = 'answer';
-        // choice.value = i;
         choice.id = 'btn' + i;
         choice.style.cursor = 'pointer';
         choice.className = 'btn';
         choice.value = questions[currentQuestion].a[i].isCorrect;
-
         choice.innerHTML = questions[currentQuestion].a[i].text;
 
         option.appendChild(choice);
@@ -97,7 +97,7 @@ const countdown = (seconds) => {
         console.log(counter);
         counter--;
 
-        timer.textContent = counter;
+        timer.textContent = counter; // prints timer value to timer span
 
         if(answers[0] === 'false'){
             timer.textContent = counter - 5; 
@@ -108,14 +108,15 @@ const countdown = (seconds) => {
         }
         
         // once the counter reaches 0, the timer clears and prints "Time's Up" to the document
-        if (document.getElementById('timer').textContent <= 0){
+        if (timer.textContent <= 0){
             clearInterval(interval);
-            document.getElementById('timer').textContent = 'Time\'s Up';
+            timer.textContent = 'Time\'s Up';
             console.log('Time\'s Up');
-            document.getElementById('o').remove();
-            document.getElementById('q').remove();
+            option.remove();
+            question.remove();
         }
 
+        // once all answers are submitted, interval is cleared and display changes
         if (answers[0, 1, 2]){
             clearInterval(interval);
             document.getElementById('timer').style.display = 'none';
@@ -127,24 +128,23 @@ const countdown = (seconds) => {
     }, 1000);
 }
 
+// function to set score and render to DOM
 const setScore = () => {
     for(let i = 0; i < answers.length; i++){
         if(answers[i] === 'true'){
             score += 5;
-            console.log(score);
+            console.log(score); // used to test score function
         } else {
             score -= 5;
-            console.log(score);
+            console.log(score); // used to test score function
         }
     }
 
-    // if(score = 15){
-    //     scoreSpan.textContent = `Your score is ${score}! Great Job!`;
-    // } else if (score = 10){
-    //     scoreSpan.textContent = `Your score is ${score}. Great try!`
-    // } else {
-    //     scoreSpan.textContent = `Your score is ${score}. Better luck next time!`
-    // }
-
-    
+    if(score === 15){
+        scoreSpan.textContent = `Your score is ${score}! Great Job!`;
+    } else if (score === 10){
+        scoreSpan.textContent = `Your score is ${score}. Great try!`
+    } else {
+        scoreSpan.textContent = `Your score is ${score}. Better luck next time!`
+    }
 }
