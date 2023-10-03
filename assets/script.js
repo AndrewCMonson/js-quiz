@@ -29,6 +29,7 @@ const startButton = document.getElementById('start');
 const question = document.getElementById('q');
 const option = document.getElementById('o');
 const scoreSpan = document.getElementById('score');
+const timer = document.getElementById('timer');
 
 let currentQuestion = 0;
 let score = 0;
@@ -56,8 +57,7 @@ const loadQuestion = () => {
     }
 }
 
-// loadQuestion();
-
+// Event listener that starts the quiz on click of the start button
 startButton.addEventListener('click', e => {
     quizDiv.style.display = 'none';
     loadQuestion();
@@ -97,14 +97,14 @@ const countdown = (seconds) => {
         console.log(counter);
         counter--;
 
-        document.getElementById('timer').textContent = counter;
+        timer.textContent = counter;
 
         if(answers[0] === 'false'){
-            document.getElementById('timer').textContent = counter - 5; 
+            timer.textContent = counter - 5; 
         }if(answers[1] === 'false'){
-            document.getElementById('timer').textContent = counter - 10; 
+            timer.textContent = counter - 10; 
         }if(answers[2] === 'false'){
-            document.getElementById('timer').textContent = counter - 15; 
+            timer.textContent = counter - 15; 
         }
         
         // once the counter reaches 0, the timer clears and prints "Time's Up" to the document
@@ -122,10 +122,29 @@ const countdown = (seconds) => {
             quizDiv.style.display = 'block';
             quizHeader.textContent = 'Quiz Complete';
             startButton.style.display = 'none';
-            
+            setScore();
         }
     }, 1000);
 }
 
+const setScore = () => {
+    for(let i = 0; i < answers.length; i++){
+        if(answers[i] === 'true'){
+            score += 5;
+            console.log(score);
+        } else {
+            score -= 5;
+            console.log(score);
+        }
+    }
 
+    // if(score = 15){
+    //     scoreSpan.textContent = `Your score is ${score}! Great Job!`;
+    // } else if (score = 10){
+    //     scoreSpan.textContent = `Your score is ${score}. Great try!`
+    // } else {
+    //     scoreSpan.textContent = `Your score is ${score}. Better luck next time!`
+    // }
 
+    
+}
