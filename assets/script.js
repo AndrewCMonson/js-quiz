@@ -42,7 +42,7 @@ const playAgain = document.getElementById('play-again');
 let currentQuestion = 0;
 let score = 0;
 let leaderboard = [];
-
+let answers = [];
 
 const playGame = () => {
 // Function that loads questions onto the page based on questions object
@@ -85,11 +85,7 @@ const playGame = () => {
     }
 
     // Event listener assigned to each button within the card container div. Once the button is clicked, it moves to the next question by calling the nextQuestion function
-    const container = document.querySelector('.card-container');
-
-    let answers = []; // array that stores answer values
-
-    container.addEventListener('click', e => {
+    gameContainer.addEventListener('click', e => {
         if (e.target.classList.contains('btn')){
             nextQuestion();
             console.log(e.target.value); // using to view answers
