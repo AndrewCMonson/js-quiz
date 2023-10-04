@@ -195,11 +195,25 @@ const playGame = () => {
 
             leaderList.appendChild(leaderListItem);
 
-            // playAgain.style.display = 'inline-block';
+            
         } 
+        // playAgain.style.display = 'inline-block';    
     })
+    
+    
+
 }
+
+// const reset = () => {
+//     currentQuestion = 0;
+//     score = 0;
+// }
 
 
 
 playGame();
+
+// playAgain.addEventListener('click', e => {
+//     reset();
+//     playGame();
+// })
