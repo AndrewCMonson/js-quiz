@@ -25,6 +25,7 @@ const questions = [{
 
 
 // Global variables
+const gameContainer = document.getElementById('container');
 const quizDiv = document.getElementById('quiz-title');
 const quizHeader= document.getElementById('qh');
 const startButton = document.getElementById('start');
@@ -33,123 +34,177 @@ const option = document.getElementById('o');
 const scoreSpan = document.getElementById('score');
 const timer = document.getElementById('timer');
 const submitScore = document.getElementById('score-submit');
+const leaderboardButton = document.getElementById('ldr-brd-add');
+const playerInput = document.getElementById('player-input');
+const playAgain = document.getElementById('play-again');
+
 
 let currentQuestion = 0;
 let score = 0;
 let leaderboard = [];
 
+
+const playGame = () => {
 // Function that loads questions onto the page based on questions object
-const loadQuestion = () => {
-    question.innerHTML = questions[currentQuestion].q; //grabs question from questions object
-    option.innerHTML = '';
+    const loadQuestion = () => {
+        question.innerHTML = questions[currentQuestion].q; //grabs question from questions object
+        option.innerHTML = '';
 
-    // for loop that loops through questions', pulls the answers out and appends a button with attributes to the options div
-    for (let i = 0; i < questions[currentQuestion].a.length; i++){
-        const choice = document.createElement('button');
+        // for loop that loops through questions', pulls the answers out and appends a button with attributes to the options div
+        for (let i = 0; i < questions[currentQuestion].a.length; i++){
+            const choice = document.createElement('button');
 
-        choice.type = 'button';
-        choice.name = 'answer';
-        choice.id = 'btn' + i;
-        choice.style.cursor = 'pointer';
-        choice.className = 'btn';
-        choice.value = questions[currentQuestion].a[i].isCorrect;
-        choice.innerHTML = questions[currentQuestion].a[i].text;
+            choice.type = 'button';
+            choice.name = 'answer';
+            choice.id = 'btn' + i;
+            choice.style.cursor = 'pointer';
+            choice.className = 'btn';
+            choice.value = questions[currentQuestion].a[i].isCorrect;
+            choice.innerHTML = questions[currentQuestion].a[i].text;
 
-        option.appendChild(choice);
-    }
-}
-
-// Event listener that starts the quiz on click of the start button
-startButton.addEventListener('click', e => {
-    quizDiv.style.display = 'none';
-    loadQuestion();
-    countdown(60);
-})
-
-// Function responsible for incrementing questions
-const nextQuestion = () => {
-    if (currentQuestion < questions.length - 1){
-        currentQuestion++;
-        loadQuestion();      
-    } else {
-       document.getElementById('o').remove();
-       document.getElementById('q').remove();
-    }
-}
-
-// Event listener assigned to each button within the card container div. Once the button is clicked, it moves to the next question by calling the nextQuestion function
-const container = document.querySelector('.card-container');
-
-let answers = []; // array that stores answer values
-
-container.addEventListener('click', e => {
-    if (e.target.classList.contains('btn')){
-        nextQuestion();
-        console.log(e.target.value); // using to view answers
-        answers.push(e.target.value); // pushes answers to global array. will use to decrement timer later and judge score
-        console.log(answers); //using to view answers
-    }
-})
-
-// countdown function that takes seconds as an argument and increments down. It prints the timer to the page, checks the value of the answers array for the correct answer and removes 5 seconds per wrong answer. 
-const countdown = (seconds) => {
-    let counter = seconds;
-
-    const interval = setInterval(() => {
-        console.log(counter);
-        counter--;
-
-        timer.textContent = counter; // prints timer value to timer span
-
-        if(answers[0] === 'false'){
-            timer.textContent = counter - 5; 
-        }if(answers[1] === 'false'){
-            timer.textContent = counter - 10; 
-        }if(answers[2] === 'false'){
-            timer.textContent = counter - 15; 
+            option.appendChild(choice);
         }
-        
-        // once the counter reaches 0, the timer clears and prints "Time's Up" to the document
-        if (timer.textContent <= 0){
-            clearInterval(interval);
-            timer.textContent = 'Time\'s Up';
-            console.log('Time\'s Up');
-            option.remove();
-            question.remove();
-        }
+    }
 
-        // once all answers are submitted, interval is cleared and display changes
-        if (answers[0, 1, 2]){
-            clearInterval(interval);
-            timer.style.display = 'none';
-            quizDiv.style.display = 'block';
-            quizHeader.textContent = 'Quiz Complete';
-            startButton.style.display = 'none';
-            submitScore.style.display = 'block';
-            setScore();
-        }
-    }, 1000);
-}
+    // Event listener that starts the quiz on click of the start button
+    startButton.addEventListener('click', e => {
+        quizDiv.style.display = 'none';
+        loadQuestion();
+        countdown(60);
+    })
 
-// function to set score and render to DOM
-const setScore = () => {
-    for(let i = 0; i < answers.length; i++){
-        if(answers[i] === 'true'){
-            score += 5;
-            console.log(score); // used to test score function
+    // Function responsible for incrementing questions
+    const nextQuestion = () => {
+        if (currentQuestion < questions.length - 1){
+            currentQuestion++;
+            loadQuestion();      
         } else {
-            score -= 5;
-            console.log(score); // used to test score function
+        document.getElementById('o').remove();
+        document.getElementById('q').remove();
         }
     }
 
-    if(score === 15){
-        scoreSpan.textContent = `Your score is ${score}! Great Job!`;
-    } else if (score === 10){
-        scoreSpan.textContent = `Your score is ${score}. Great try!`
-    } else {
-        scoreSpan.textContent = `Your score is ${score}. Better luck next time!`
+    // Event listener assigned to each button within the card container div. Once the button is clicked, it moves to the next question by calling the nextQuestion function
+    const container = document.querySelector('.card-container');
+
+    let answers = []; // array that stores answer values
+
+    container.addEventListener('click', e => {
+        if (e.target.classList.contains('btn')){
+            nextQuestion();
+            console.log(e.target.value); // using to view answers
+            answers.push(e.target.value); // pushes answers to global array. will use to decrement timer later and judge score
+            console.log(answers); //using to view answers
+        }
+    })
+
+    // countdown function that takes seconds as an argument and increments down. It prints the timer to the page, checks the value of the answers array for the correct answer and removes 5 seconds per wrong answer. 
+    const countdown = (seconds) => {
+        let counter = seconds;
+
+        const interval = setInterval(() => {
+            console.log(counter);
+            counter--;
+
+            timer.textContent = counter; // prints timer value to timer span
+
+            if(answers[0] === 'false'){
+                timer.textContent = counter - 5; 
+            }if(answers[1] === 'false'){
+                timer.textContent = counter - 10; 
+            }if(answers[2] === 'false'){
+                timer.textContent = counter - 15; 
+            }
+            
+            // once the counter reaches 0, the timer clears and prints "Time's Up" to the document
+            if (timer.textContent <= 0){
+                clearInterval(interval);
+                timer.textContent = 'Time\'s Up';
+                console.log('Time\'s Up');
+                option.remove();
+                question.remove();
+            }
+
+            // once all answers are submitted, interval is cleared and display changes
+            if (answers[0, 1, 2]){
+                clearInterval(interval);
+                timer.style.display = 'none';
+                quizDiv.style.display = 'flex';
+                quizHeader.textContent = 'Quiz Complete';
+                startButton.style.display = 'none';
+                submitScore.style.display = 'block';
+                setScore();
+            }
+        }, 1000);
     }
+
+    // function to set score and render to DOM
+    const setScore = () => {
+        for(let i = 0; i < answers.length; i++){
+            if(answers[i] === 'true'){
+                score += 5;
+                console.log(score); // used to test score function
+            } else {
+                score -= 5;
+                console.log(score); // used to test score function
+            }
+        }
+
+        if(score === 15){
+            scoreSpan.textContent = `Your score is ${score}! Great Job!`;
+        } else if (score === 10){
+            scoreSpan.textContent = `Your score is ${score}. Great try!`
+        } else {
+            scoreSpan.textContent = `Your score is ${score}. Better luck next time!`
+        }
+    }
+
+    // TODO build hi-scores function
+
+
+
+    submitScore.addEventListener('click', e => {
+        playerInput.style.display = 'inline-block';
+        quizHeader.textContent = 'Enter Your Initials To Save Your Score!';
+        quizDiv.appendChild(playerInput);
+        submitScore.style.display = 'none';
+        leaderboardButton.style.display = 'inline-block';
+        scoreSpan.style.display = 'none';
+        
+
+        
+    })
+
+    leaderboardButton.addEventListener('click', e => {
+        
+        leaderboard.push({
+            name: playerInput.value,
+            playerScore: score
+        })
+
+        quizHeader.textContent = 'Scores This Session';
+        console.log(leaderboard);
+
+        const leaderList = document.createElement('ul')
+        quizDiv.appendChild(leaderList);
+        playerInput.style.display = 'none';
+        leaderboardButton.style.display = 'none';
+        
+        for(let i = 0; i < leaderboard.length; i++){
+            
+            const leaderListItem = document.createElement('li');
+
+            leaderListItem.style.listStyleType = 'none';
+
+            leaderListItem.textContent = `Player: ${leaderboard[i].name} Score: ${leaderboard[i].playerScore}`
+
+            leaderList.appendChild(leaderListItem);
+
+            // playAgain.style.display = 'inline-block';
+        } 
+    })
 }
 
-// TODO build hi-scores function
+
+
+playGame();

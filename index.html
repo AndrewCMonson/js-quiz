@@ -5,16 +5,19 @@
         <link rel="stylesheet" href="./assets/css/style.css" type="text/css">
     </head>
     <body>
-        <div class="card-container">
+        <div class="card-container" id="container">
             <div class="quiztitle" id="quiz-title">
                 <h1 class="welcome-header" id="qh">Welcome to your Quiz</h1>
                 <button id="start">Start</button>    
             </div>
             <div class="q-card" id="q"></div>
             <div class="options" id="o"></div>
+            <input type="text" id="player-input" maxlength="3">
             <span id="timer"></span>
             <span id="score"></span>
             <button id="score-submit">Submit score</button>
+            <button id="ldr-brd-add">Add To Leaderboard</button>
+            <button id="play-again">Play Again?</button>
         </div>
     </body>
     <script src="./assets/script.js"></script>
