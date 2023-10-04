@@ -159,10 +159,7 @@ const playGame = () => {
         }
     }
 
-    // TODO build hi-scores function
-
-
-
+    // Event listener that renders new screen for users to enter their initials to be added to the leaderboard
     submitScore.addEventListener('click', e => {
         playerInput.style.display = 'inline-block';
         quizHeader.textContent = 'Enter Your Initials To Save Your Score!';
@@ -170,11 +167,9 @@ const playGame = () => {
         submitScore.style.display = 'none';
         leaderboardButton.style.display = 'inline-block';
         scoreSpan.style.display = 'none';
-        
-
-        
     })
 
+    // Event listener that pushes scores and names into an array of objects, iterates through the array of objects to gather names and scores, then renders it to the page to display the leaders
     leaderboardButton.addEventListener('click', e => {
         
         leaderboard.push({
@@ -183,7 +178,7 @@ const playGame = () => {
         })
 
         quizHeader.textContent = 'Scores This Session';
-        console.log(leaderboard);
+        // console.log(leaderboard);
 
         const leaderList = document.createElement('ul')
         quizDiv.appendChild(leaderList);
