@@ -1,24 +1,32 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet">
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="stylesheet" href="./assets/css/reset.css" type="text/css">
         <link rel="stylesheet" href="./assets/css/style.css" type="text/css">
     </head>
     <body>
-        <div class="card-container" id="container">
-            <div class="quiztitle" id="quiz-title">
-                <h1 class="welcome-header" id="qh">Javascript Quiz</h1>
-                <button id="start">Start</button>    
+        <main>
+            <div class="card-container" id="container">
+                <span id="timer"></span>
+                <div class="quiztitle" id="quiz-title">
+                    <h1 class="welcome-header" id="qh">Javascript Quiz</h1>
+                    <span id="built-by">built by andrew</span>
+                    <button id="start">Start</button>    
+                </div>
+                <div class="q-card" id="q"></div>
+                <div class="options" id="o"></div>
+                <input type="text" id="player-input" maxlength="3">
+                <span id="score"></span>
+                <button id="score-submit">Submit score</button>
+                <button id="ldr-brd-add">Add To Leaderboard</button>
+                <button id="play-again">Play Again?</button>
             </div>
-            <div class="q-card" id="q"></div>
-            <div class="options" id="o"></div>
-            <input type="text" id="player-input" maxlength="3">
-            <span id="timer"></span>
-            <span id="score"></span>
-            <button id="score-submit">Submit score</button>
-            <button id="ldr-brd-add">Add To Leaderboard</button>
-            <button id="play-again">Play Again?</button>
-        </div>
+        </main>
     </body>
+    
     <script src="./assets/script.js"></script>
 </html>
