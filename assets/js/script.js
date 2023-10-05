@@ -174,13 +174,16 @@ const playGame = () => {
         })
 
         quizHeader.textContent = 'Scores This Session';
-        // console.log(leaderboard);
+        
 
         const leaderList = document.createElement('ul')
         quizDiv.appendChild(leaderList);
         playerInput.style.display = 'none';
         leaderboardButton.style.display = 'none';
-        
+        localStorage.setItem('leaders', JSON.stringify(leaderboard));
+        console.log(leaderboard);
+
+            
         for(let i = 0; i < leaderboard.length; i++){
             
             const leaderListItem = document.createElement('li');
@@ -209,7 +212,13 @@ const playGame = () => {
 
 playGame();
 
+
+
 // playAgain.addEventListener('click', e => {
 //     reset();
 //     playGame();
 // })
+
+// TODO local storage for leaderboards
+
+// localStorage.setItem('leaders', leaderboard);
