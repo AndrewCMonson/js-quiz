@@ -168,10 +168,19 @@ const playGame = () => {
     // Event listener that pushes scores and names into an array of objects, iterates through the array of objects to gather names and scores, then renders it to the page to display the leaders
     leaderboardButton.addEventListener('click', e => {
         
-        leaderboard.push({
-            name: playerInput.value,
-            playerScore: score
-        })
+        if(playerInput.value === ''){
+            leaderboard.push({
+                name: 'Anonymous',
+                playerScore: score
+            })
+        } else {
+            leaderboard.push({
+                name: playerInput.value,
+                playerScore: score
+            })
+        }
+
+        
 
         quizHeader.textContent = 'Scores This Session';
         // console.log(leaderboard);
@@ -203,6 +212,7 @@ const playGame = () => {
 // const reset = () => {
 //     currentQuestion = 0;
 //     score = 0;
+//     answers = [];
 // }
 
 
