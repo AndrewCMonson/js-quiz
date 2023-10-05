@@ -37,6 +37,7 @@ const submitScore = document.getElementById('score-submit');
 const leaderboardButton = document.getElementById('ldr-brd-add');
 const playerInput = document.getElementById('player-input');
 const playAgain = document.getElementById('play-again');
+const builtBy = document.getElementById('built-by');
 
 
 let currentQuestion = 0;
@@ -69,6 +70,7 @@ const playGame = () => {
     // Event listener that starts the quiz on click of the start button
     startButton.addEventListener('click', e => {
         quizDiv.style.display = 'none';
+        builtBy.style.display = 'none';
         loadQuestion();
         countdown(60);
     })
@@ -99,10 +101,11 @@ const playGame = () => {
         let counter = seconds;
 
         const interval = setInterval(() => {
+            timer.textContent = counter;
             console.log(counter);
             counter--;
 
-            timer.textContent = counter; // prints timer value to timer span
+             // prints timer value to timer span
 
             if(answers[0] === 'false'){
                 timer.textContent = counter - 5; 
