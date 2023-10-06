@@ -37,12 +37,14 @@ const submitScore = document.getElementById('score-submit');
 const leaderboardButton = document.getElementById('ldr-brd-add');
 const playerInput = document.getElementById('player-input');
 const playAgain = document.getElementById('play-again');
+const builtBy = document.getElementById('built-by');
 
 
 let currentQuestion = 0;
 let score = 0;
-let leaderboard = [];
 let answers = [];
+let leaderboard = [];
+
 
 const playGame = () => {
 // Function that loads questions onto the page based on questions object
@@ -69,6 +71,7 @@ const playGame = () => {
     // Event listener that starts the quiz on click of the start button
     startButton.addEventListener('click', e => {
         quizDiv.style.display = 'none';
+        builtBy.style.display = 'none';
         loadQuestion();
         countdown(60);
     })
@@ -79,8 +82,8 @@ const playGame = () => {
             currentQuestion++;
             loadQuestion();      
         } else {
-        document.getElementById('o').remove();
-        document.getElementById('q').remove();
+        question.style.display = 'none';
+        option.style.display = 'none';
         }
     }
 
@@ -99,11 +102,13 @@ const playGame = () => {
         let counter = seconds;
 
         const interval = setInterval(() => {
+            // prints timer value to timer span
+            timer.textContent = counter;
             console.log(counter);
             counter--;
 
-            timer.textContent = counter; // prints timer value to timer span
-
+             
+            // reduces time displayed if answers are false
             if(answers[0] === 'false'){
                 timer.textContent = counter - 5; 
             }if(answers[1] === 'false'){
@@ -180,7 +185,7 @@ const playGame = () => {
         quizDiv.appendChild(leaderList);
         playerInput.style.display = 'none';
         leaderboardButton.style.display = 'none';
-        localStorage.setItem('leaders', JSON.stringify(leaderboard));
+        // localStorage.setItem('leaders', JSON.stringify(leaderboard));
         console.log(leaderboard);
 
             
