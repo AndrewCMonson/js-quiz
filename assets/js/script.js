@@ -43,7 +43,7 @@ const builtBy = document.getElementById('built-by');
 let currentQuestion = 0;
 let score = 0;
 let answers = [];
-let leaderboard = [];
+
 
 
 const playGame = () => {
@@ -122,8 +122,8 @@ const playGame = () => {
                 clearInterval(interval);
                 timer.textContent = 'Time\'s Up';
                 console.log('Time\'s Up');
-                option.remove();
-                question.remove();
+                option.style.display = 'none';
+                question.style.display = 'none';;
             }
 
             // once all answers are submitted, interval is cleared and display changes
@@ -170,25 +170,35 @@ const playGame = () => {
         scoreSpan.style.display = 'none';
     })
 
-    // Event listener that pushes scores and names into an array of objects, iterates through the array of objects to gather names and scores, then renders it to the page to display the leaders
+    // Event listener that grabs any stored leaderboard info and parses it. creates a "leader" object, pushes that object to the retrieved leaderboard localstorage and then pushes it back to local storage
     leaderboardButton.addEventListener('click', e => {
-        
-        leaderboard.push({
+        let leaderboard = JSON.parse(localStorage.getItem('leaderboard'));
+        let leader = {
             name: playerInput.value,
             playerScore: score
-        })
+        }
+        // checks if leaderboard has values. if none, turns it into an empty array. If more than 10, resets the leaderboard.
+        if(leaderboard == null){
+            leaderboard = [];
+        }if(leaderboard.length > 10){
+            leaderboard = [];
+        }
+
+        localStorage.setItem('leader', JSON.stringify(leader));
+
+        leaderboard.push(leader);
+        localStorage.setItem('leaderboard', JSON.stringify(leaderboard));
+        console.log(leaderboard);
+        leaderboard.sort((a, b) => a - b);
+
 
         quizHeader.textContent = 'Scores This Session';
-        
 
         const leaderList = document.createElement('ul')
         quizDiv.appendChild(leaderList);
         playerInput.style.display = 'none';
         leaderboardButton.style.display = 'none';
-        // localStorage.setItem('leaders', JSON.stringify(leaderboard));
-        console.log(leaderboard);
-
-            
+        
         for(let i = 0; i < leaderboard.length; i++){
             
             const leaderListItem = document.createElement('li');
@@ -198,20 +208,18 @@ const playGame = () => {
             leaderListItem.textContent = `Player: ${leaderboard[i].name} Score: ${leaderboard[i].playerScore}`
 
             leaderList.appendChild(leaderListItem);
-
-            
         } 
-        // playAgain.style.display = 'inline-block';    
+        
+        playAgain.style.display = 'inline-block';    
     })
     
     
 
 }
 
-// const reset = () => {
-//     currentQuestion = 0;
-//     score = 0;
-// }
+const reset = () => {
+    location.reload();
+}
 
 
 
@@ -219,11 +227,23 @@ playGame();
 
 
 
-// playAgain.addEventListener('click', e => {
-//     reset();
-//     playGame();
-// })
+playAgain.addEventListener('click', e => {
+    reset();
+    playGame();
+})
 
 // TODO local storage for leaderboards
 
 // localStorage.setItem('leaders', leaderboard);
+
+// localStorage.setItem('username', playerInput.value);
+        // localStorage.setItem('score', score);
+
+        // let playerScore = localStorage.getItem('score');
+        // let username = localStorage.getItem('username');
+
+        // console.log(`Player ${username} Score: ${playerScore}`);
+
+        // console.log({...localStorage});
+
+        // const newLeaderboard = {...localStorage};
