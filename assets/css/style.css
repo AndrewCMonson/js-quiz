@@ -8,10 +8,12 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: rgb(94, 155, 204);
 }
 
 main {
     position: absolute;
+    background-color: white;
 }
 
 h1 {

@@ -1,5 +1,4 @@
 // Object that contains an array of objects for questions to load onto the page
-
 const questions = [{
     q: 'Which data type must always be enclosed in quotations?',
     a: [{ text: 'String', isCorrect: true },
@@ -20,6 +19,27 @@ const questions = [{
         { text: 'Document Object Model', isCorrect: true},
         { text: 'Distributed Object Model', isCorrect: false},
         { text: 'Document Open Model', isCorrect: false}]
+},
+{
+    q: 'Which method is used to retrieve data from local storage?',
+    a: [{ text: 'localStorage.setItem()', isCorrect: false },
+        { text: 'localStorage.pushItem()', isCorrect: false },
+        { text: 'localStorage.getItem()', isCorrect: true },
+        { text: 'localStorage.pullItem()', isCorrect: false}]
+},
+{
+    q: 'Which method selects all elements with the same class type?',
+    a: [{ text: 'document.getElementById()', isCorrect: false },
+        { text: 'document.getElementByClassName', isCorrect: true },
+        { text: 'document.getClasses', isCorrect: false },
+        { text: 'document.getElementClasses', isCorrect: false }]
+},
+{
+    q: 'What does JSON.stringify do?',
+    a: [{ text: 'Turns non-string data into a string', isCorrect: true },
+        { text: 'Gives you spaghetti', isCorrect: false },
+        { text: 'Nothing', isCorrect: false },
+        { text: 'Calls a guy named Jason', isCorrect: false}]
 }
 ]
 
@@ -63,7 +83,6 @@ const playGame = () => {
             choice.className = 'btn';
             choice.value = questions[currentQuestion].a[i].isCorrect;
             choice.innerHTML = questions[currentQuestion].a[i].text;
-
             option.appendChild(choice);
         }
     }
@@ -115,6 +134,12 @@ const playGame = () => {
                 timer.textContent = counter - 10; 
             }if(answers[2] === 'false'){
                 timer.textContent = counter - 15; 
+            }if(answers[3] === 'false'){
+                timer.textContent = counter - 20; 
+            }if(answers[4] === 'false'){
+                timer.textContent = counter - 25; 
+            }if(answers[5] === 'false'){
+                timer.textContent = counter - 30; 
             }
             
             // once the counter reaches 0, the timer clears and prints "Time's Up" to the document
@@ -127,7 +152,7 @@ const playGame = () => {
             }
 
             // once all answers are submitted, interval is cleared and display changes
-            if (answers[0, 1, 2]){
+            if (answers[0, 1, 2, 3, 4, 5]){
                 clearInterval(interval);
                 timer.style.display = 'none';
                 quizDiv.style.display = 'flex';
@@ -185,27 +210,28 @@ const playGame = () => {
         }
 
         localStorage.setItem('leader', JSON.stringify(leader));
-
         leaderboard.push(leader);
         localStorage.setItem('leaderboard', JSON.stringify(leaderboard));
         console.log(leaderboard);
-        leaderboard.sort((a, b) => a - b);
 
-
+        // renders an unordered list of leaders from the leaderboard array
         quizHeader.textContent = 'Scores This Session';
-
         const leaderList = document.createElement('ul')
         quizDiv.appendChild(leaderList);
         playerInput.style.display = 'none';
         leaderboardButton.style.display = 'none';
+
+        const sortedLeaderboard = leaderboard.sort((a, b) => {
+            return a.playerScore - b.playerScore;
+        })
         
-        for(let i = 0; i < leaderboard.length; i++){
+        for(let i = 0; i < sortedLeaderboard.length; i++){
             
             const leaderListItem = document.createElement('li');
 
             leaderListItem.style.listStyleType = 'none';
 
-            leaderListItem.textContent = `Player: ${leaderboard[i].name} Score: ${leaderboard[i].playerScore}`
+            leaderListItem.textContent = `Player: ${sortedLeaderboard[i].name} Score: ${sortedLeaderboard[i].playerScore}`
 
             leaderList.appendChild(leaderListItem);
         } 
@@ -217,33 +243,10 @@ const playGame = () => {
 
 }
 
-const reset = () => {
-    location.reload();
-}
-
-
-
 playGame();
 
-
-
 playAgain.addEventListener('click', e => {
-    reset();
-    playGame();
+    location.reload();
 })
 
-// TODO local storage for leaderboards
 
-// localStorage.setItem('leaders', leaderboard);
-
-// localStorage.setItem('username', playerInput.value);
-        // localStorage.setItem('score', score);
-
-        // let playerScore = localStorage.getItem('score');
-        // let username = localStorage.getItem('username');
-
-        // console.log(`Player ${username} Score: ${playerScore}`);
-
-        // console.log({...localStorage});
-
-        // const newLeaderboard = {...localStorage};
