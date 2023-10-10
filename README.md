@@ -32,5 +32,4 @@ THEN I can save my initials and score
 ![Save Your Score Screenshot](assets/resources/JS-Quiz-SS-4.png)
 ![Leaderboard Screenshot](assets/resources/JS-Quiz-SS-5.png)
 ## Instructions
-
-## Reflection
+This application can be accessed by following this link: https://andrewcmonson.github.io/js-quiz/
