@@ -110,45 +110,49 @@ const playGame = () => {
     gameContainer.addEventListener('click', e => {
         if (e.target.classList.contains('btn')){
             nextQuestion();
-            console.log(e.target.value); // using to view answers
+            // console.log(e.target.value); // using to view answers
             answers.push(e.target.value); // pushes answers to global array. will use to decrement timer later and judge score
-            console.log(answers); //using to view answers
+            // console.log(answers); //using to view answers
         }
     })
 
     // countdown function that takes seconds as an argument and increments down. It prints the timer to the page, checks the value of the answers array for the correct answer and removes 5 seconds per wrong answer. 
     const countdown = (seconds) => {
-        let counter = seconds;
+        
 
         const interval = setInterval(() => {
             // prints timer value to timer span
-            timer.textContent = counter;
-            console.log(counter);
-            counter--;
+            timer.textContent = seconds;
+            console.log(seconds);
+            seconds--;
 
              
             // reduces time displayed if answers are false
             if(answers[0] === 'false'){
-                timer.textContent = counter - 5; 
+                timer.textContent = seconds - 5; 
             }if(answers[1] === 'false'){
-                timer.textContent = counter - 10; 
+                timer.textContent = seconds- 10; 
             }if(answers[2] === 'false'){
-                timer.textContent = counter - 15; 
+                timer.textContent = seconds- 15; 
             }if(answers[3] === 'false'){
-                timer.textContent = counter - 20; 
+                timer.textContent = seconds- 20; 
             }if(answers[4] === 'false'){
-                timer.textContent = counter - 25; 
+                timer.textContent = seconds- 25; 
             }if(answers[5] === 'false'){
-                timer.textContent = counter - 30; 
+                timer.textContent = seconds- 30; 
             }
             
             // once the counter reaches 0, the timer clears and prints "Time's Up" to the document
             if (timer.textContent <= 0){
                 clearInterval(interval);
-                timer.textContent = 'Time\'s Up';
-                console.log('Time\'s Up');
+                timer.style.display = 'none';
                 option.style.display = 'none';
-                question.style.display = 'none';;
+                question.style.display = 'none';
+                submitScore.style.display = 'block';
+                quizDiv.style.display = 'flex';
+                quizHeader.textContent = 'Time\'s Up!';
+                startButton.style.display = 'none';
+                setScore();
             }
 
             // once all answers are submitted, interval is cleared and display changes
@@ -169,10 +173,10 @@ const playGame = () => {
         for(let i = 0; i < answers.length; i++){
             if(answers[i] === 'true'){
                 score += 5;
-                console.log(score); // used to test score function
+                // console.log(score); // used to test score function
             } else {
                 score -= 5;
-                console.log(score); // used to test score function
+                // console.log(score); // used to test score function
             }
         }
 
@@ -198,7 +202,7 @@ const playGame = () => {
     // Event listener that grabs any stored leaderboard info and parses it. creates a "leader" object, pushes that object to the retrieved leaderboard localstorage and then pushes it back to local storage
     leaderboardButton.addEventListener('click', e => {
         let leaderboard = JSON.parse(localStorage.getItem('leaderboard'));
-        let leader = {
+        const leader = {
             name: playerInput.value,
             playerScore: score
         }
@@ -212,7 +216,7 @@ const playGame = () => {
         localStorage.setItem('leader', JSON.stringify(leader));
         leaderboard.push(leader);
         localStorage.setItem('leaderboard', JSON.stringify(leaderboard));
-        console.log(leaderboard);
+        // console.log(leaderboard);
 
         // renders an unordered list of leaders from the leaderboard array
         quizHeader.textContent = 'Scores This Session';
@@ -221,8 +225,9 @@ const playGame = () => {
         playerInput.style.display = 'none';
         leaderboardButton.style.display = 'none';
 
+        // sorts the leaderboard by highest score
         const sortedLeaderboard = leaderboard.sort((a, b) => {
-            return a.playerScore - b.playerScore;
+            return b.playerScore - a.playerScore;
         })
         
         for(let i = 0; i < sortedLeaderboard.length; i++){
@@ -235,12 +240,8 @@ const playGame = () => {
 
             leaderList.appendChild(leaderListItem);
         } 
-        
         playAgain.style.display = 'inline-block';    
     })
-    
-    
-
 }
 
 playGame();
