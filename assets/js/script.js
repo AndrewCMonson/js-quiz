@@ -180,7 +180,7 @@ const playGame = () => {
             }
         }
 
-        if(score === 15){
+        if(score > 15){
             scoreSpan.textContent = `Your score is ${score}! Great Job!`;
         } else if (score === 10){
             scoreSpan.textContent = `Your score is ${score}. Great try!`

@@ -26,7 +26,11 @@ THEN I can save my initials and score
 ```
 
 ## Screenshots
-
+![Starting Screenshot](assets/resources/JS-Quiz-SS-1.png)
+![Question Example Screenshot](assets/resources/JS-Quiz-SS-2.png)
+![Quiz Complete Screenshot](assets/resources/JS-Quiz-SS-3.png)
+![Save Your Score Screenshot](assets/resources/JS-Quiz-SS-4.png)
+![Leaderboard Screenshot](assets/resources/JS-Quiz-SS-5.png)
 ## Instructions
 
 ## Reflection
